@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Registrations</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Event Registrations</h1>
+    <label>
+      Logged in as
+      <select id="user-select"></select>
+    </label>
+  </header>
+
+  <main>
+    <section>
+      <h2>Events</h2>
+      <div id="events" class="cards"></div>
+    </section>
+
+    <section>
+      <h2>My registrations</h2>
+      <ul id="my-registrations"></ul>
+    </section>
+
+    <section id="attendees-section" hidden>
+      <h2>Attendees for <span id="attendees-title"></span></h2>
+      <ul id="attendees"></ul>
+    </section>
+  </main>
+
+  <div id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
