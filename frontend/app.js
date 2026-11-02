@@ -1,3 +1,8 @@
+// ---------- config ----------
+// Base URL of the backend API. Empty string = same origin (when Flask serves this page).
+// On Vercel, set this to your Render URL, e.g. "https://deploy-demo.onrender.com".
+const API_BASE = "";
+
 // ---------- state ----------
 let currentUser = null;   // the id of the user chosen in the dropdown
 let users = [];           // used to show who is the organiser
@@ -23,7 +28,7 @@ function userById(id) {
 
 // ---------- API calls, one per route ----------
 async function loadUsers() {
-  const res = await fetch("/api/users");
+  const res = await fetch(`${API_BASE}/api/users`);
   users = await res.json();
 
   const select = document.getElementById("user-select");
@@ -38,7 +43,7 @@ async function loadUsers() {
 }
 
 async function loadEvents() {
-  const res = await fetch("/api/events");
+  const res = await fetch(`${API_BASE}/api/events`);
   const events = await res.json();
 
   const me = userById(currentUser);
@@ -61,7 +66,7 @@ async function loadEvents() {
 }
 
 async function register(eventId) {
-  const res = await fetch("/api/registrations", {
+  const res = await fetch(`${API_BASE}/api/registrations`, {
     method: "POST",
     headers: headers(true),
     body: JSON.stringify({ event_id: eventId })
@@ -77,7 +82,7 @@ async function register(eventId) {
 }
 
 async function loadMyRegistrations() {
-  const res = await fetch("/api/me/registrations", { headers: headers() });
+  const res = await fetch(`${API_BASE}/api/me/registrations`, { headers: headers() });
   const regs = await res.json();
 
   const list = document.getElementById("my-registrations");
@@ -87,7 +92,7 @@ async function loadMyRegistrations() {
 }
 
 async function loadAttendees(eventId, title) {
-  const res = await fetch(`/api/events/${eventId}/registrations`, { headers: headers() });
+  const res = await fetch(`${API_BASE}/api/events/${eventId}/registrations`, { headers: headers() });
   const data = await res.json();
 
   if (!res.ok) {

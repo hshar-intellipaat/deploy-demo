@@ -1,10 +1,15 @@
 import os
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from supabase import create_client, Client
 from postgrest import APIError
 from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__, static_folder='frontend', static_url_path='')
+
+# Allow the frontend (served from another domain, e.g. Vercel) to call this API.
+# FRONTEND_URL is optional; when unset, any origin is allowed (fine for a demo).
+CORS(app, origins=os.environ.get('FRONTEND_URL', '*'))
 
 supabase: Client = create_client(
     os.environ.get("SUPABASE_URL"),
@@ -132,4 +137,4 @@ def event_registrations(event_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
